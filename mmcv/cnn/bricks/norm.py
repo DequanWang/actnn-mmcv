@@ -18,6 +18,16 @@ NORM_LAYERS.register_module('IN1d', module=nn.InstanceNorm1d)
 NORM_LAYERS.register_module('IN2d', module=nn.InstanceNorm2d)
 NORM_LAYERS.register_module('IN3d', module=nn.InstanceNorm3d)
 
+try:
+    import actnn
+    NORM_LAYERS.register_module('QBN1d', module=actnn.QBatchNorm1d)
+    NORM_LAYERS.register_module('QBN2d', module=actnn.QBatchNorm2d)
+    NORM_LAYERS.register_module('QBN3d', module=actnn.QBatchNorm3d)
+    NORM_LAYERS.register_module('QBN', module=actnn.QBatchNorm2d)
+    NORM_LAYERS.register_module('QSyncBN', module=actnn.QSyncBatchNorm)
+except ImportError:
+    print("Please install actnn for memory saving ops.")
+
 
 def infer_abbr(class_type):
     """Infer abbreviation from the class name.

@@ -7,6 +7,15 @@ CONV_LAYERS.register_module('Conv2d', module=nn.Conv2d)
 CONV_LAYERS.register_module('Conv3d', module=nn.Conv3d)
 CONV_LAYERS.register_module('Conv', module=nn.Conv2d)
 
+try:
+    import actnn
+    CONV_LAYERS.register_module('QConv1d', module=actnn.QConv1d)
+    CONV_LAYERS.register_module('QConv2d', module=actnn.QConv2d)
+    CONV_LAYERS.register_module('QConv3d', module=actnn.QConv3d)
+    CONV_LAYERS.register_module('QConv', module=actnn.QConv2d)
+except ImportError:
+    print("Please install actnn for memory saving ops.")
+
 
 def build_conv_layer(cfg, *args, **kwargs):
     """Build convolution layer.

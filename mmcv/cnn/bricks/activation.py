@@ -11,6 +11,12 @@ for module in [
 ]:
     ACTIVATION_LAYERS.register_module(module=module)
 
+try:
+    import actnn
+    ACTIVATION_LAYERS.register_module('QReLU', module=actnn.QReLU)
+except ImportError:
+    print("Please install actnn for memory saving ops.")
+
 
 @ACTIVATION_LAYERS.register_module(name='Clip')
 @ACTIVATION_LAYERS.register_module()
