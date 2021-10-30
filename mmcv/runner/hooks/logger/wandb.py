@@ -44,11 +44,20 @@ class WandbLoggerHook(LoggerHook):
     def log(self, runner):
         tags = self.get_loggable_tags(runner)
         if tags:
+            tags['global_step'] = self.get_iter(runner)
             if self.with_step:
+                is_val = False
+                for key in tags:
+                    if "val/" in key: 
+                    # if currently reporting the val metric
+                        is_val = True
+                        break
+                if is_val:
+                    tags['global_step'] += 1
                 self.wandb.log(
-                    tags, step=self.get_iter(runner), commit=self.commit)
+                    tags, step=tags['global_step'],
+                    commit=False if is_val else self.commit)
             else:
-                tags['global_step'] = self.get_iter(runner)
                 self.wandb.log(tags, commit=self.commit)
 
     @master_only
