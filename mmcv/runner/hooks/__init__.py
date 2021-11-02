@@ -1,4 +1,5 @@
 # Copyright (c) OpenMMLab. All rights reserved.
+from .actnn import ActnnHook
 from .checkpoint import CheckpointHook
 from .closure import ClosureHook
 from .ema import EMAHook
@@ -25,5 +26,5 @@ __all__ = [
     'NeptuneLoggerHook', 'WandbLoggerHook', 'DvcliveLoggerHook',
     'MomentumUpdaterHook', 'SyncBuffersHook', 'EMAHook', 'EvalHook',
     'DistEvalHook', 'ProfilerHook', 'GradientCumulativeOptimizerHook',
-    'GradientCumulativeFp16OptimizerHook'
+    'GradientCumulativeFp16OptimizerHook', 'ActnnHook'
 ]
