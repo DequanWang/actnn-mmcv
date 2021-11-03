@@ -57,8 +57,12 @@ def adaptive_clip_grad(parameters, clip_factor=0.01, eps=1e-3, norm_type=2.0):
 class OptimizerHook(Hook):
 
     def __init__(self, grad_clip=None):
-        self.grad_clip_mode = grad_clip.pop('mode', 'norm')
-        self.grad_clip = grad_clip
+        if grad_clip:
+            self.grad_clip_mode = grad_clip.pop('mode', 'norm')
+            self.grad_clip = grad_clip
+        else:
+            self.grad_clip_mode = None
+            self.grad_clip = None
 
     def clip_grads(self, params):
         params = list(

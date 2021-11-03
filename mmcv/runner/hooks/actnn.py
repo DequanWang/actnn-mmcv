@@ -4,7 +4,7 @@ from .hook import HOOKS, Hook
 
 
 @HOOKS.register_module()
-class ActnnHook(Hook):
+class ActNNHook(Hook):
     """.
     This hook will call actnn controller.iterate, which is used to update auto precision
     Args:
@@ -21,7 +21,8 @@ class ActnnHook(Hook):
     def __init__(self, interval=1):
         self.interval = interval
 
-    def before_run(self, runner):
+    def before_train_epoch(self, runner):
+        runner.controller.unrelated_tensors = set()
         runner.controller.filter_tensors(runner.model.named_parameters())
 
     def after_train_iter(self, runner):
